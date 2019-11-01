@@ -1,40 +1,23 @@
-import tree_node
-from list_to_tree import Convert
-
+from tree_node import TreeNode
+from list_to_tree import ConvertTree
+from traversal import Traversal
 
 class Solution:
-    def isSymmetric(self, root: tree_node) -> bool:
-        l = self.in_order(root)
-        i = 0
-        j = len(l) - 1
-
-        while i < j and i < len(l):
-            if l[i] != l[j]:
-                return False
-            else:
-                i += 1
-                j -= 1
-        return True
-
-    def in_order(self, root: tree_node):
-        if not root:
-            return [None]
-        elif not root.left and not root.right:
-            return [root.val]
+    def isSymmetric(self, root):
+        if root is None:
+            return True
         else:
-            return self.in_order(root.left) + [root.val] + self.in_order(root.right)
-
+            t = Traversal()
+            ll = t.in_order(root.left)
+            lr = t.in_order_right(root.right)
+            if ll == lr:
+                return True
+            else:
+                return False
 
 if __name__ == "__main__":
-    sample = [5, 4, 1, None, 1, None, 4, 2, None, 2, None]
-    i = 0
-    j = len(sample)
-    root = None
-    c = Convert()
-    root = c.list_to_tree(sample, root, i, j)
-    print(c.in_order(root))
-
+    sample = "[5,4,1,null,1,null,4,2,null,2,null]"
+    c = ConvertTree()
+    root = ConvertTree.convert_tree(c, sample)
     s = Solution()
-    result_list = s.in_order(root)
-    print(result_list)
-    print(s.is_symmetric(root))
+    print(Solution.isSymmetric(s, root))
